@@ -32,9 +32,10 @@ using namespace jrtplib;
 using namespace jthread;
 #endif
 
+
 class MyRTPSession : public RTPSession
 {
-
+	static DWORD hasRecv;
 protected:
 	void OnPollThreadStep();
 	void ProcessRTPPacket(const RTPSourceData &srcdat, const RTPPacket &rtppack);
