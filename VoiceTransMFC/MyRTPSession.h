@@ -35,7 +35,9 @@ using namespace jthread;
 
 class MyRTPSession : public RTPSession
 {
+public:
 	static DWORD hasRecv;
+	static BOOL IS_USING_THIS_BUF;
 protected:
 	void OnPollThreadStep();
 	void ProcessRTPPacket(const RTPSourceData &srcdat, const RTPPacket &rtppack);

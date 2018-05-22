@@ -3,7 +3,7 @@
 
 #pragma once
 DWORD MyRTPSession::hasRecv = 0;
-
+BOOL MyRTPSession::IS_USING_THIS_BUF = FALSE;
 #if 1
 
 void MyRTPSession::OnPollThreadStep()
@@ -41,17 +41,18 @@ void MyRTPSession::ProcessRTPPacket(const RTPSourceData &srcdat, const RTPPacket
 	//std::cout << rtppack.GetPayloadLength() << std::endl;
 	uint8_t *data = rtppack.GetPayloadData();
 	size_t len = rtppack.GetPayloadLength();
+
 	if (hasRecv == INP_BUFFER_SIZE) {
 		//一个缓冲区满了
+
+		CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].dwLength = hasRecv;
+
 		CVoiceTransMFCDlg::nReceive = (CVoiceTransMFCDlg::nReceive + 1) % OutBlocks;
 		hasRecv = 0;
 	}
-	else if(hasRecv != 0){
-		CopyMemory(CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].lpdata + hasRecv, data, len);
-		hasRecv += len;
-	}
-	else if (hasRecv == 0) {
+	if (hasRecv == 0) {
 		//开辟新的缓冲
+
 		CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].lpdata = (PBYTE)realloc(0, INP_BUFFER_SIZE);
 		if (CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].lpdata == NULL)
 		{
@@ -59,12 +60,14 @@ void MyRTPSession::ProcessRTPPacket(const RTPSourceData &srcdat, const RTPPacket
 			return;
 		}
 		CopyMemory(CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].lpdata, data, len);
+
 		hasRecv += len;
 	}
+	if (hasRecv != 0) {
+	
+		CopyMemory(CVoiceTransMFCDlg::m_AudioDataOut[CVoiceTransMFCDlg::nReceive].lpdata + hasRecv, data, len);
 
-	
-	
-	
-
+		hasRecv += len;
+	}
 }
 #endif
