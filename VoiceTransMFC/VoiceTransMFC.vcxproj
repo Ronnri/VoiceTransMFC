@@ -189,6 +189,7 @@
     <ClInclude Include="VoiceTransMFCDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="G729aCompress.cpp" />
     <ClCompile Include="MyRTPSession.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

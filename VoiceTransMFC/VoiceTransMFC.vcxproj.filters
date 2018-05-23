@@ -47,6 +47,9 @@
     <ClCompile Include="MyRTPSession.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="G729aCompress.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VoiceTransMFC.rc">
